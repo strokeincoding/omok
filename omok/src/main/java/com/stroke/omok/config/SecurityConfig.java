@@ -108,13 +108,28 @@ public class SecurityConfig {
                 // Boot 2.x에서는 http.formLogin().loginPage()처럼 설정 가능했지만
                 // Boot 3.x에서도 구조는 같으나 반환 타입 및 체인 방식이 바뀜
                 //
-                // loginProcessingUrl() → 로그인 요청을 처리할 URL
-                // defaultSuccessUrl() → 로그인 성공 후 이동 URL
+                // -----------------------------------------------------------------
+                // React SPA 연동을 위한 로그인 처리 방식
+                // redirect 사용 ❌
+                // JSON 응답 반환 ✔
+                //
+                // React가 fetch/axios로 login 요청을 보낼 것이므로
+                // 서버는 JSON만 반환하고, 페이지 이동은 React가 직접 수행하는 구조가 필요함.
                 // -----------------------------------------------------------------
                 .formLogin(login -> login
                         .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/auth/success", true)
-                        .failureUrl("/auth/fail")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .successHandler((request, response, authentication) -> {
+                            response.setStatus(200);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write("{\"message\":\"LOGIN_SUCCESS\"}");
+                        })
+                        .failureHandler((request, response, exception) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json;charset=UTF-8");
+                            response.getWriter().write("{\"message\":\"LOGIN_FAILED\"}");
+                        })
                         .permitAll()
                 )
 
