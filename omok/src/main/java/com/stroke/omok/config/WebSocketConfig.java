@@ -9,6 +9,7 @@ import com.stroke.omok.websocket.EchoHandler;
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+    // 임시 테스트를 위한 websocket 환경 설정
 
     private final EchoHandler echoHandler;
 

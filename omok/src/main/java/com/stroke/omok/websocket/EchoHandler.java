@@ -6,6 +6,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class EchoHandler extends TextWebSocketHandler {
 
+    //웹소켓 테스트 헨들러 설정
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("🔗 WebSocket 연결됨: " + session.getId());
