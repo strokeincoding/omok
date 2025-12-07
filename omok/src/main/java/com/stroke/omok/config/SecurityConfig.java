@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    // 초기 테스트를 위한 security 환경 설정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
