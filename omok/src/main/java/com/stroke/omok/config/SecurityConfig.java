@@ -98,7 +98,8 @@ public class SecurityConfig {
                 // 회원가입/로그인(/auth/**)는 인증 없이 접근 가능
                 // -----------------------------------------------------------------
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/auth/me").authenticated()     // 로그인된 사용자만 호출 가능하도록 수정
                         .requestMatchers("/ws/**").authenticated()
                         .anyRequest().permitAll()
                 )
