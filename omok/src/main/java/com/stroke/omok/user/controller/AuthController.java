@@ -21,26 +21,33 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<?> me(Authentication authentication) {
-        if (authentication == null) {
+
+        if (authentication == null ||
+                !authentication.isAuthenticated() ||
+                authentication.getPrincipal().equals("anonymousUser")) {
             return ResponseEntity.status(401).body(Map.of("message", "UNAUTHORIZED"));
         }
 
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
+        String role = user.getAuthorities()
+                .stream()
+                .findFirst()
+                .map(a -> a.getAuthority())
+                .orElse("ROLE_USER");
+
         return ResponseEntity.ok(
                 Map.of(
                         "id", user.getUserId(),
                         "username", user.getUsername(),
-                        "role", user.getAuthorities()
+                        "role", role
                 )
         );
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegisterRequest userRegisterRequest) {
-        userService.register(userRegisterRequest);
+    public ResponseEntity<?> register(@RequestBody UserRegisterRequest req) {
+        userService.register(req);
         return ResponseEntity.ok(Map.of("message", "REGISTER_SUCCESS"));
     }
-
-
 }
