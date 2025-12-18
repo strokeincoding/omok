@@ -27,6 +27,8 @@ public enum LobbyMessageType {
     USER_JOIN,      // 유저 입장 (확장용)
     USER_LEAVE,     // 유저 퇴장 (확장용)
 
+    USER_LIST, // 로비 접속 시 전체 유저 목록 스냅샷
+
     ROOM_LIST,      // 방 목록 전달 (Day 3 후반)
     MATCHING_STATE  // 매칭 상태 (Day 4)
 }
