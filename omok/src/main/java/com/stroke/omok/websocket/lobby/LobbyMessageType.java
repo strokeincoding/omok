@@ -23,7 +23,10 @@ package com.stroke.omok.websocket.lobby;
 //로비 이벤트 정의
 public enum LobbyMessageType {
 
-    JOIN,       // 유저 입장
-    LEAVE,      // 유저 퇴장
-    USER_COUNT  // 현재 접속자 수 브로드캐스트
+    USER_COUNT,     // 현재 접속자 수
+    USER_JOIN,      // 유저 입장 (확장용)
+    USER_LEAVE,     // 유저 퇴장 (확장용)
+
+    ROOM_LIST,      // 방 목록 전달 (Day 3 후반)
+    MATCHING_STATE  // 매칭 상태 (Day 4)
 }
